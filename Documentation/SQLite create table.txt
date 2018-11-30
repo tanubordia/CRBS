@@ -1,0 +1,72 @@
+>>> import sqlite3
+>>> conn = sqlite3.connect('usersDB.db')
+>>> cursor = conn.cursor()
+>>> cursor.execute("CREATE TABLE Users(uid TEXT,pass TEXT,uname TEXT,email TEXT,phone INTEGER,city TEXT);")
+<sqlite3.Cursor object at 0x039B7920>
+
+>>> cur.execute('pragma table_info(Rooms)').fetchall() 
+[(0, 'r_id', 'TEXT', 0, None, 0), 
+(1, 'city', 'TEXT', 0, None, 0), 
+(2, 'r_name', 'TEXT', 0, None, 0),
+ (3, 'loc', 'TEXT', 0, None, 0), 
+(4, 'seats', 'INTEGER', 0, None, 0), 
+(5, 'ac', 'INTEGER', 0, None, 0), 
+(6, 'sb', 'INTEGER', 0, None, 0), 
+(7, 'prj', 'INTEGER', 0, None, 0)]  
+
+>>> cur.execute('pragma table_info(Bookings)').fetchall()                                                               
+[(0, 'r_id', 'TEXT', 0, None, 0),
+ (1, 'uid', 'TEXT', 0, None, 0), 
+ (2, 'e_name', 'TEXT', 0, None, 0), 
+ (3, 'b_date', 'DATE', 0, None, 0), 
+ (4, 'days', 'INTEGER', 0, None, 0)]           
+
+('p1', 'Pune', 'PCCOE Campus', 'Nigdi', 20, 0, 1, 1)                                                                    
+('p2', 'Pune', 'The Pride Hotel', 'Shivaji Nagar', 50, 1, 1, 1)                                                  
+('p3', 'Pune', 'Cygnus Hall', 'Bibewadi', 70, 1, 0, 0)                                                                  
+('p4', 'Pune', 'Oak', 'Vadgaon', 90, 0, 0, 0)                                                        
+('p5', 'Pune', 'Oak', 'Vadgaon', 110, 1, 0, 0)
+
+('p6', 'Mumbai', 'Latitude', 'Lower Parel', 110, 0, 0, 1)                                                               
+('p7', 'Mumbai', 'JSK', 'Koregaon West', 150, 0, 1, 0)                                                                  
+('p8', 'Mumbai', 'Sunville', 'Worli', 180, 1, 1, 0)                                                                   
+('p9', 'Mumbai', 'The Oberoi', 'Nariman Point', 90, 1, 0, 1)                                                            
+('p10', 'Mumbai', 'Peninsula', 'Andheri East', 120, 1, 1, 1)                                                            
+('p11', 'Mumbai', 'Renaissance', 'Powai', 180, 0, 1, 0)    
+
+('p12', 'Bangalore', 'Yolee', 'Pottery Road', 80, 1, 1, 0)                                                             
+('p13', 'Bangalore', 'Hyatt', 'Ulsur', 180, 1, 1, 1)                                                                    
+('p14', 'Bangalore', 'Adarsh Hamilton', 'Richmond Town', 60, 1, 1, 1)                                                   
+('p15', 'Bangalore', 'EBISU', 'Yelankha', 140, 1, 0, 0)                                                                 
+('p16', 'Bangalore', 'Sterlings', 'Kodihalli', 100, 1, 1, 1)    
+
+('p17', 'Delhi', 'Conference Venue', 'New Delhi', 60, 1, 1, 0)                                                          
+('p18', 'Delhi', 'Metro', 'Karol Bagh', 140, 1, 1, 0)                                                                   
+('p19', 'Delhi', 'JRD Exotica', 'Safdarjung', 70, 1, 0, 1)                                                              
+('p20', 'Delhi', 'Legend Inn', 'East Of Kailash', 100, 1, 1, 1)
+('p21', 'Delhi', 'NMDC', 'Connaught Place', 110, 1, 0, 0)
+('p22', 'Delhi', 'Surya', 'Friends Place', 120, 1, 0, 1)
+
+
+  
+
+
+('p23', 'Pune', 'Oak', 'Vadgaon', 110, 0, 0, 1)
+
+('p24', 'Pune', 'Ruby', 'Wakad', 80, 0, 1, 0)
+('p25', 'Pune', 'Mantra Lotus', 'Aundh', 180, 1, 0, 1)
+('p26', 'Pune', 'Iricen', 'Nigdi', 25, 1, 1, 0)
+('p27', 'Pune', 'Ashish Plaza', 'Shivaji Nagar', 50, 1, 0, 0)
+('p28', 'Pune', 'Kapila', 'Sangamwadi', 70, 1, 1, 1)
+
+('p29', 'Mumbai', 'Dragonfly', 'Chakala', 80, 0, 0, 0)  
+('p30', 'Mumbai', 'LJ', 'Dadar', 40, 0, 1, 1)  
+('p31', 'Mumbai', 'Ginger', 'Andheri East', 100, 1, 1, 1)  
+('p32', 'Mumbai', 'R Nest', 'Dadar', 60, 0, 1, 1)  
+('p33', 'Mumbai', 'Trident', 'Bandra', 120, 1, 0, 0)  
+('p35', 'Mumbai', 'Rodas', 'Powai', 300, 1, 1, 0)
+
+
+('p36', 'Bangalore', 'Star Banquets', 'Jayanagar', 100, 0, 0, 0),('p37', 'Bangalore', 'Topview', 'Indiranagar', 50, 0, 0, 1),('p38', 'Bangalore', 'Pai Vista', 'Banashankari', 120, 0, 1, 0),('p39', 'Bangalore', 'DBS Center', 'Vasantnagar', 45, 0, 1, 1),('p40', 'Bangalore', 'Chandragiri', 'Vijaynagar', 90, 1, 1, 1),('p41', 'Bangalore', 'Grande Banquets', 'Whitfield', 180, 1, 0, 1)'p42', 'Bangalore', 'GK Conference Hall', 'Bhashankari', 200, 1, 1, 1) 
+
+('p43', 'Delhi', 'VenueLook', 'Noida', 70, 0, 0, 0),('p44', 'Delhi', 'Umang', 'Canaught Place', 40, 0, 0, 1),('p45', 'Delhi', 'Vatika Triangle', 'Barakhamba', 80, 0, 1, 0),('p46', 'Delhi', 'British Council', 'Barakhamba', 120, 0, 1, 1),('p47', 'Delhi', 'Le Pacific', 'Vikhroli', 90, 1, 0, 0),('p48', 'Delhi', 'Spectre', 'Punjabi Bagh', 140, 1, 0, 1)

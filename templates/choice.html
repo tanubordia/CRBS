@@ -1,0 +1,180 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<body data-spy="scroll" data-target="#site-nav">
+    <nav id="site-nav" class="navbar navbar-fixed-top navbar-custom">
+        <div class="container">
+
+
+
+            <div class="collapse navbar-collapse" id="navbar-items">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <!-- navigation menu -->
+                    {% if data %}
+                    <li class = "active"><a href="#">{{data}}</a> </li>
+                    <li><a href="/">Log Out</a></li>
+                    {% else %}
+                    <li class = "active"><a href="/">Log In</a></li>
+                    {% endif %}
+
+
+
+                </ul>
+            </div>
+
+        </div><!-- /.container -->
+    </nav>
+
+    <script src="../static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../static/bower_components/smooth-scroll/dist/js/smooth-scroll.min.js"></script>
+
+
+  <header id="site-header" class="site-header valign-center">
+        <div class="intro">
+
+            <h3>Looking for a place to host a conference?</h3>
+            <br>
+            
+            <br><br><br><br>
+
+        </div>
+    </header>
+
+
+    <section id="hall-book" class="section registration">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="section-title">Find available halls</h3>
+                </div>
+            </div>
+
+
+                <div class="row">
+                    <div class="col-md-12" id="Booking-msg" style="display:none;">
+                        <div class="alert"></div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <form id="search-hall-form" method="post">
+
+                       <input type="text" id="uid" name="uid" value= {{data}} hidden></input>
+
+                        <div class="form-group">
+                            <select class="form-control" name="hallcity" id="hallcity">
+                                <option readonly>City</option>
+                                <option>Pune</option>
+                                <option>Mumbai</option>
+                                <option>Bangalore</option>
+                                <option>Delhi</option>
+                            </select>
+
+                        </div>
+                        <br>
+
+                        <h4 class=section-title>Choose Requirements</h4>
+
+                        <div class="form-group">
+                            <input type="number" min="0" class="form-control" placeholder="Number of seats" id="seats" name="seats" >
+                            <br>
+                            <input type="checkbox" name="ac" id="ac">
+                            <label for = "ac">AC</label>
+                            <br>
+
+                            <input type="checkbox" name="sb" id="sb" >
+                            <label for = "sb">Smart Board</label>
+                            <br>
+
+                            <input type="checkbox" name="pr" id="pr" >
+                            <label for = "pr">Projector</label>
+                        </div>
+
+
+                        <br>
+                        <br>
+
+                        <div class="form-group">
+
+                            <a href="#search-btn" class="btn btn-black " name="search-btn" id="search-btn">Search</a>
+
+                        </div>
+                        <script type=text/javascript>
+
+                            $('#search-btn').bind('click', function() {
+
+                            $('#rooms-table').empty();
+                            var boxes = "";
+                            var mydiv = document.getElementById("dataDiv");
+
+                            $.each($('form input[type=checkbox]')
+                                .filter(function(idx){
+                                    return $(this).prop('checked') === false
+                                }),
+                                function(idx, el){
+                                    // attach matched element names to the formData with a chosen value.
+                                    var emptyVal = "";
+                                    boxes += '&' + $(el).attr('name') + '=' + emptyVal;
+                                }
+                            );
+                            $.ajax({
+                                url: '/searchHalls',
+                                data: $('form').serialize()+boxes,
+                                type: 'POST',
+                                success: function(response) {
+
+                                var tr = '<tr><th>Name</th><th>City</th><th>Location</th><th>Seats</th></tr>'
+                                $('#rooms-table').append(tr)
+                                for ( i=0; i<response['list'].length; i++)
+                                {
+                                    var aid = ("a"+i).toString();
+                                    var tr = '<tr>' ;
+                                    var roomId = JSON.stringify(response['list'][i][0]).replace(/"+/g, "");
+                                    var roomName = JSON.stringify(response['list'][i][1]).replace(/"+/g, "");
+
+                                    tr += '<td><form id="send" method="post" action="/calendar"><input id="click_rid" name="click_rid" value="'+roomId+'" hidden/><input id="rname" name="rname" value="'+roomName+'" hidden/><button type = submit>'+ roomName + '</button></form></td>';
+                                    tr += '<td>' + JSON.stringify(response['list'][i][4]).replace(/"+/g, "")+ '</td>';
+                                    tr += '<td>' + JSON.stringify(response['list'][i][2]).replace(/"+/g, "")+ '</td>';
+                                    tr += '<td>' + JSON.stringify(response['list'][i][3]).replace(/"+/g, "")+ '</td>';
+
+                                    tr +='</tr>';
+
+
+                                    $('#rooms-table').append(tr)
+
+
+                                    $('#rooms-table').show(1000);
+
+                                }
+                                },
+                                error: function(error) {
+
+                                    console.log(error);
+                                }
+                            });
+
+
+                            });
+
+                        </script>
+                    </form>
+                    <table id='rooms-table' name = 'rooms-table' class="table table-inverse table-striped" hidden>
+
+                    </table>
+
+                </div>
+                        <style>
+                                    .coltxt
+                                    {
+                                        color: #A52A2A
+                                    }
+                        </style>
+
+
+
+
+
+    </section>
+{% endblock %}

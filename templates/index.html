@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Conference Room Booking System</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="../static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/bower_components/ionicons/css/ionicons.min.css">
+    
+
+    <script src="../static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../static/bower_components/smooth-scroll/dist/js/smooth-scroll.min.js"></script>
+    <script src="../static/assets/js/main.js"> </script>
+
+</head>
+<body data-spy="scroll" data-target="#site-nav">
+    <nav id="site-nav" class="navbar navbar-fixed-top navbar-custom">
+        <div class="container">
+
+            <div class="collapse navbar-collapse" id="navbar-items">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <!-- navigation menu -->
+
+
+                </ul>
+            </div>
+
+        </div><!-- /.container -->
+    </nav>
+
+    <header id="site-header" class="site-header valign-center">
+        <div class="intro">
+            <h1>Conference Room Booking System</h1>
+            <a class="btn btn-white" data-scroll href="#login">Log In</a>
+        </div>
+    </header>
+
+
+    <section id="login" class="section registration">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="section-title">Login</h3>
+                </div>
+            </div>
+
+            <form action="/login" id="registration-form" method="post">
+                <div class="row">
+                    <div class="col-md-12" id="registration-msg" style="display:none;">
+                        <div class="alert"></div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="User-id" id="uid" name="uid" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" id="pass" name="pass" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-black " name="login-btn" id="login-btn">Login</button>
+                        </div>
+                             <br>
+
+                             <div class="form-group">
+                             <a class="btn btn-black" data-scroll href="#signup">Not a member?</a>
+                             </div>
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                       <div class="alert alert-danger alert-dismissible">
+                                        {{message}}
+                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        </div>
+                                </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                        <style>
+                                    .coltxt
+                                    {
+                                        color: #A52A2A
+                                    }
+                        </style>
+            </form>
+        </div>
+    </section>
+
+<section id="signup" class="section registration">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="section-title">Sign Up</h3>
+                </div>
+            </div>
+
+            <form action="/signup" id="signup-form" method="post">
+                <div class="row">
+                    <div class="col-md-12" id="registration-msg" style="display:none;">
+                        <div class="alert"></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="User-id" name="sp_uid" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" id="sp_pass" name="sp_pass" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Name" name="uname" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" pattern="[7-9]{1}[0-9]{9}" class="form-control" placeholder="Mobile Number" id="cell" name="cell" required>
+                        </div>
+
+
+                        <div class="form-group">
+                            <select class="form-control" name="city" id="city" required>
+                                <option readonly>City</option>
+                                <option>Pune</option>
+                                <option>Mumbai</option>
+                                <option>Banglore</option>
+                                <option>Delhi</option>
+                            </select>
+
+                           <br>
+
+                        <a href="#signup-form" class="btn btn-black" name="signup-btn" id="signup-btn"> Sign Up</a>
+                         <script type=text/javascript>
+                            var fla=0
+                            function validate() {
+                              $("#myg").text("");
+
+                              var email = $("#email").val();
+                              if (document.getElementById("email").checkValidity()) {
+
+                                if (document.getElementById("cell").checkValidity()) {
+
+                                }
+                                else {
+                                    $("#myg").text("Mobile Number is not valid");
+                                    fla=1
+                                }
+
+                              } else {
+                                $("#myg").text("Email id is not valid");
+                                fla=1
+                              }
+                              return false;
+                            }
+
+                                $('#signup-btn').bind('click', function() {
+                                    fla=0           //for every click on signup, checking should be done.
+                                  validate();
+                                  if(fla==0)
+                                    {
+                                        $.ajax({
+                                            url: '/signup',
+                                            data: $('form').serialize(),
+                                            type: 'POST',
+                                            success: function(response) {
+
+                                                $("#myg").text(JSON.stringify(response['result']).replace(/"+/g, "")); //replace double quotes with null
+                                            },
+                                            error: function(error) {
+                                                console.log(error);
+                                            }
+                                        });
+                                    }
+                            });
+                            </script>
+                        <br>
+                        <br>
+                        <div class="coltxt" id=myg name=myg>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+        {% if data[0] %}
+        <section id="schedule" class="section schedule">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="section-title">Event Schedule</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="schedule-box">
+                            <div class="time">
+                                <time datetime="09:00">
+                                    {{data[0][2]}}</time>
+                            </div>
+                            <h3>{{data[0][1]}}</h3>
+                            <p>{{data[0][0]}}</p>
+                        </div>
+                    </div>
+                    {% if data[1] %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="schedule-box">
+                                <div class="time">
+                                    <time datetime="10:00">{{data[1][2]}}</time>
+                                </div>
+                                <h3>{{data[1][1]}}</h3>
+                            <p>{{data[1][0]}}</p>
+                            </div>
+                        </div>
+                        {% if data[2] %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="schedule-box">
+                                <div class="time">
+                                    <time datetime="10:00">{{data[2][2]}}</time>
+                                </div>
+                                <h3>{{data[2][1]}}</h3>
+                            <p>{{data[2][0]}}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+        </section>
+    {% endif %}
+
+
+</body>
+</html>
