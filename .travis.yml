@@ -3,7 +3,9 @@ language: python
 python: 2.7.12
 services: docker
 
+
 before_install:
   - docker-compose up -d
+script:
 after_install:
   - docker-compose stop
